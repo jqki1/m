@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>for mohak ♡</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{
+  margin:0;
+  min-height:100vh;
+  background:url("https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e") center/cover no-repeat;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+.overlay{
+  position:fixed; inset:0;
+  background:rgba(255,230,240,0.55);
+  backdrop-filter:blur(6px);
+}
+.card{
+  position:relative;
+  background:#fff;
+  border-radius:26px;
+  padding:28px;
+  width:90%;
+  max-width:420px;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(255,105,180,0.25);
+  z-index:2;
+  animation:fade 0.7s ease;
+}
+.hidden{display:none;}
+
+h1{color:#ff5fa2;}
+p{color:#555;line-height:1.6;}
+
+input{
+  padding:10px;
+  border-radius:14px;
+  border:1px solid #ffb6d5;
+  width:80%;
+  margin-top:10px;
+}
+
+button{
+  margin-top:18px;
+  padding:12px 26px;
+  border:none;
+  border-radius:30px;
+  background:#ff7ab8;
+  color:white;
+  cursor:pointer;
+}
+button:hover{transform:scale(1.05);}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* Progress hearts */
+.progress{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin-bottom:15px;
+}
+.heart{
+  font-size:18px;
+  opacity:0.3;
+  transition:0.4s;
+}
+.heart.active{opacity:1; transform:scale(1.2);}
+
+/* Warning popup */
+.warning{
+  position:fixed;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  background:#fff;
+  border-radius:20px;
+  padding:25px;
+  width:280px;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,0.25);
+  z-index:10;
+  animation:shake 0.4s ease;
+}
+@keyframes shake{
+  0%{transform:translate(-50%,-50%) rotate(0);}
+  25%{transform:translate(-48%,-50%) rotate(1deg);}
+  50%{transform:translate(-52%,-50%) rotate(-1deg);}
+  75%{transform:translate(-48%,-50%) rotate(1deg);}
+  100%{transform:translate(-50%,-50%) rotate(0);}
+}
+
+/* Gift box */
+.gift{
+  font-size:60px;
+  cursor:pointer;
+  animation:bounce 1.5s infinite;
+}
+@keyframes bounce{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-10px);}
+}
+</style>
+</head>
+
+<body>
+<div class="overlay"></div>
+
+<!-- typing pop -->
+<audio id="pop" src="https://cdn.pixabay.com/audio/2022/03/15/audio_5c9d1d1e35.mp3"></audio>
+
+<!-- background music -->
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/audio/2023/03/02/audio_2c3f59fd7d.mp3">
+</audio>
+
+<!-- progress -->
+<div class="progress">
+  <span class="heart" id="h1">💗</span>
+  <span class="heart" id="h2">💗</span>
+  <span class="heart" id="h3">💗</span>
+</div>
+
+<!-- STEP 1 -->
+<div class="card" id="step1">
+  <h1>hey mohak</h1>
+  <p>solve this</p>
+  <h2>7 − 6 = ?</h2>
+  <input id="a1">
+  <button onclick="q1()">next</button>
+</div>
+
+<!-- STEP 2 -->
+<div class="card hidden" id="step2">
+  <h1>good boy</h1>
+  <h2>32 ÷ 8 = ?</h2>
+  <input id="a2">
+  <button onclick="q2()">next</button>
+</div>
+
+<!-- STEP 3 -->
+<div class="card hidden" id="step3">
+  <h1>almost there</h1>
+  <h2>501 − 498 = ?</h2>
+  <input id="a3">
+  <button onclick="triggerWarning()">continue</button>
+</div>
+
+<!-- WARNING -->
+<div class="warning hidden" id="warning">
+  <h2>⚠️ wait</h2>
+  <p>just a second,<br>are you sure?</p>
+  <button onclick="confirmWarning()">yes</button>
+</div>
+
+<!-- CONFESSION -->
+<div class="card hidden" id="confession">
+  <h1>my sweet boy mohak</h1>
+  <p>
+    did you notice the answers?<br>
+    <strong>1 · 4 · 3</strong><br><br>
+    that’s something I’ve wanted to say…
+  </p>
+  <h2>I love you</h2>
+  <p>will you be my boyfriend?</p>
+  <button onclick="sayYes()">yes</button>
+</div>
+
+<!-- END -->
+<div class="card hidden" id="end">
+  <h1>💖</h1>
+  <p id="time"></p>
+  <p>tap the gift</p>
+  <div class="gift" onclick="openGift()">🎁</div>
+  <div id="playlist" class="hidden">
+    <iframe style="margin-top:15px;border-radius:14px"
+      src="https://open.spotify.com/playlist/69Q9k1c3bHdur9Qp1Du6ly"
+      width="300" height="80" allow="encrypted-media"></iframe>
+  </div>
+</div>
+
+<script>
+const pop = document.getElementById("pop");
+function sound(){ pop.currentTime=0; pop.play(); }
+
+function q1(){
+  sound();
+  if(a1.value=="1"){
+    step1.classList.add("hidden");
+    step2.classList.remove("hidden");
+    h1.classList.add("active");
+  }
+}
+
+function q2(){
+  sound();
+  if(a2.value=="4"){
+    step2.classList.add("hidden");
+    step3.classList.remove("hidden");
+    h2.classList.add("active");
+  }
+}
+
+function triggerWarning(){
+  sound();
+  if(a3.value=="3"){
+    step3.classList.add("hidden");
+    warning.classList.remove("hidden");
+  }
+}
+
+function confirmWarning(){
+  sound();
+  warning.classList.add("hidden");
+  confession.classList.remove("hidden");
+  h3.classList.add("active");
+}
+
+function sayYes(){
+  sound();
+  confession.classList.add("hidden");
+  end.classList.remove("hidden");
+  time.textContent = "confirmed on: " + new Date().toLocaleString();
+}
+
+function openGift(){
+  sound();
+  playlist.classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
